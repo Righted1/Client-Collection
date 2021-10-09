@@ -1,0 +1,138 @@
+local Bot_Names = "BobDavidMattPeterJackieSamDeanNoobRickCarlGlennMaggieBethSunnyTyreeseMerleCarolAbrahamMorganDaryl"
+
+local Check_Bypass = "Pastel Rainbow Shaggy Dominus Venari Decklace The Wanwood Crown ): Red Grind ): Euro 180 Teal Sparkle Time Fedora Red Sparkle Time Fedora Red Tango Green Sparkle Time Fedora Blackvalk The Kleos Aphthiton Rainbow Shaggy Midnight Blue Sparkle Time Fedora Lord of the Federation Dark Knight Wanwood Crown Antenna Antlers The Kleos Aphthiton Merely's ROBLOX Tablet Domino Crown"
+
+local TextLabel = game.Players.LocalPlayer.PlayerGui.Version.Frame.TextLabel
+
+local function Log(Text)
+    TextLabel.Text = Text
+end
+
+local BuyArgs
+local SellArgs
+local Sell_Price
+
+_G.Active = true
+
+local function Main()
+    for i,Limited in pairs (game.ReplicatedStorage.Limitteds:GetChildren()) do
+        for i,Selling in pairs (Limited.Privates:GetChildren()) do
+            if Selling then
+                if string.find(Bot_Names, Selling.Name) and Limited.RAP.Value > 0 and game.Players.LocalPlayer.Robux.Value > Selling.Price.Value then
+                    if Selling.Price.Value <= Limited.RAP.Value - 30000 or string.find(Check_Bypass, Limited.Name) then
+                        BuyArgs = {
+                            [1] = Selling.Price.Value,
+                            [2] = Selling.Serial.Value,
+                            [3] = Limited.Name,
+                            [4] = Selling.Name,
+                        }
+                        Log("Buying " .. BuyArgs[3] .. " - ID: " .. BuyArgs[2] .. " - Cost: " .. BuyArgs[1])
+                        game.ReplicatedStorage["PrivateSale"]:InvokeServer(unpack(BuyArgs))
+                        if Limited.Name == "Dominus Astra" then
+                            Sell_Price = 2400000
+                        elseif Limited.Name == "Dominus Venari" then
+                            Sell_Price = 10000000
+                        elseif Limited.Name == "Dominus Infernus" then
+                            Sell_Price = 3750000
+                        elseif Limited.Name == "Dominus Frigidus" then
+                            Sell_Price = 5000000
+                        elseif Limited.Name == "Dominus Empyreus" then
+                            Sell_Price = 6500000
+                        elseif Limited.Name == "Rainbow Shaggy" then
+                            Sell_Price = 3500000
+                        elseif Limited.Name == "Lord of the Federation" then
+                            Sell_Price = 1100000
+                        elseif Limited.Name == "Duke of the Federation" then
+                            Sell_Price = 680000
+                        elseif Limited.Name == "Immortal Sword: The Piece Maker" then
+                            Sell_Price = 500000
+                        elseif Limited.Name == "Darkheart" then
+                            Sell_Price = 380000
+                        elseif Limited.Name == "The Dusekkar" then
+                            Sell_Price = 1300000
+                        elseif Limited.Name == "Dominus Rex" then
+                            Sell_Price = 440000
+                        elseif Limited.Name == "Dark Knight Helmet" then
+                            Sell_Price = 2000000
+                        elseif Limited.Name == "Midnight Blue Sparkle Time Fedora" then
+                            Sell_Price = 850000
+                        elseif Limited.Name == "Wanwood Crown" then
+                            Sell_Price = 1900000
+                        elseif Limited.Name == "Antenna Antlers" then
+                            Sell_Price = 200000
+                        elseif Limited.Name == "Merely's ROBLOX Tablet" then
+                            Sell_Price = 1000000
+                        elseif Limited.Name == "Rukiryo's ROBLOX Tablet" then
+                            Sell_Price = 1000000
+                        elseif Limited.Name == "The Kleos Aphthiton" then
+                            Sell_Price = 1600000
+                        elseif Limited.Name == "Domino Crown" then
+                            Sell_Price = 2800000
+                        elseif Limited.Name == "Cat Eye Infantry Helm" then
+                            Sell_Price = 2500000
+                        elseif Limited.Name == "Blackvalk" then
+                            Sell_Price = 600000
+                        elseif Limited.Name == "Dominus Aureus" then
+                            Sell_Price = 550000
+                        elseif Limited.Name == "Bling $$ Necklace" then
+                            Sell_Price = 425000
+                        elseif Limited.Name == "Black Iron Crown of Pwnage" then
+                            Sell_Price = 4000000
+                        elseif Limited.Name == "Green Sparkle Time Fedora" then
+                            Sell_Price = 925000
+                        elseif Limited.Name == "Red Sparkle Time Fedora" then
+                            Sell_Price = 1675000
+                        elseif Limited.Name == "Red Tango" then
+                            Sell_Price = 450000
+                        elseif Limited.Name == "Teal Sparkle Time Fedora" then
+                            Sell_Price = 450000
+                        elseif Limited.Name == "Purple Sparkle Time Fedora" then
+                            Sell_Price = 715000
+                        elseif Limited.Name == "): Euro 180" then
+                            Sell_Price = 650000
+                        elseif Limited.Name == "): Red Grind" then
+                            Sell_Price = 500000
+                        elseif Limited.Name == "Sparkletime Valkyrie" then
+                            Sell_Price = 450000
+                        elseif Limited.Name == "Eerie Pumpkin Head" then
+                            Sell_Price = 950000
+                        elseif Limited.Name == "Black Iron Domino Crown of Interns" then
+                            Sell_Price = 2400000
+                        elseif Limited.Name == "The Wanwood Crown" then
+                            Sell_Price = 2000000
+                        elseif Limited.Name == "Sparkle Time Fedora" then
+                            Sell_Price = 195000
+                        elseif Limited.Name == "Decklace" then
+                            Sell_Price = 350000
+                        elseif Limited.Name == "Pastel Rainbow Shaggy" then
+                            Sell_Price = 170000
+                        else
+                            Sell_Price = math.floor((Limited.RAP.Value * 1.1) + 0.5)
+                        end
+                        SellArgs = {
+                            [1] = Sell_Price,
+                            [2] = {
+                                [1] = BuyArgs[2],
+                            },
+                            [3] = Limited.Name,
+                        }
+                        Log("Selling " .. SellArgs[3] .. " - ID: " .. SellArgs[2][1] .. " - Price: " .. SellArgs[1])
+                        game.ReplicatedStorage["Sell_Item"]:InvokeServer(unpack(SellArgs))
+                    end
+                end
+            end
+        end
+    end
+end
+
+repeat
+    Main()
+    Log("Process ended, starting again in 7 seconds!")
+    wait(7)
+    for _,Message in pairs (game.Players.LocalPlayer.Messages:GetChildren()) do
+        Message:Destroy()
+    end
+until
+    _G.Active == false
+    
+Log("Process Destroyed, re-execute script to start again!")

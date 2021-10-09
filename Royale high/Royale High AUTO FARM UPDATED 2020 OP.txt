@@ -1,0 +1,6 @@
+_G.WheelItem = "Wave2"--Change this to Wave1 or Wave2
+_G.farmDelay = 0.3--ammount of time to teleport each diamond to you.
+_G.switchTime = 300--time it takes to switch bewtwwn enchantix and Royale High
+
+
+loadstring(game:HttpGet(('https://pastebin.com/raw/wsm5pAcp'),true))()

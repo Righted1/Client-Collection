@@ -1,0 +1,12 @@
+-- EDIT THE COORDINATES
+-- OR USE ANY REMOTE2SCRIPT TO TAKE THE PLACE REMOTE AND SPAM IT
+local UsernameSpot = game.Players.LocalPlayer.Character.Name
+local A_1 = "PlaceBuilding"
+local A_2 = 
+{
+	[1] = game:GetService("ReplicatedStorage").Storage.Buildings.Food["Plant_Apple"], 
+	[2] = CFrame.new(-401.5, -17.4900017, -569.5, 0, 4.37113883e-08, -1, 4.37113883e-08, 1, 4.37113883e-08, 1, 0, 0), 
+	[3] = false
+}
+local Event = game:GetService("Players")[UsernameSpot].Function
+Event:InvokeServer(A_1, A_2)

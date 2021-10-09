@@ -1,0 +1,77 @@
+
+local library = loadstring(game:HttpGet(('https://pastebin.com/raw/FsJak6AT')))() -- It's obfuscated, I won't let you see my ugly coding skills. =)
+
+local w = library:CreateWindow("WorkAtThePizzaPlace")
+
+local b = w:CreateFolder("Main Functions")
+
+b:Label("Credits: V3RMillion-Banckielol03, Discord-mario1234#6807",Color3.fromRGB(38,38,38),Color3.fromRGB(100, 149, 237)) 
+
+b:Toggle("AutoFarmWorker",function(bool)
+    if bool then
+        getgenv().autofarm = true
+    else
+        getgenv().autofarm = false
+    end 
+end)
+
+b:DestroyGUI()
+
+b:GuiSettings()  
+
+while wait() do
+    if getgenv().autofarm == true then
+        if game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool") then
+            for i, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+                if v.Name:len() == 2 then
+                    v.Parent = game.Players.LocalPlayer.Character
+                end
+            end
+            
+            wait()
+            
+            local item = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool").Name
+            
+                    for i,v in pairs(game.Workspace.Houses:GetChildren()) do
+                        for i,v in pairs(v:GetChildren()) do
+                            if v.Name == "Address" then
+                                print(v.Value)
+                                if v.Value == item then
+                                    for i,v in pairs(v.Parent.Upgrades:GetChildren()) do
+                                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Parent.Parent.Upgrades[v.Name].Doors.FrontDoorMain.DoorTouch.CFrame * CFrame.new(-5, 0, 0)
+                                        wait(8)
+                                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(64.7216568, 6.63000107, -11.3157063)
+                                        wait(1)
+                                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(58.4695549, 6.63000107, -9.41764355)
+                                        wait(1)
+                                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(68.068222, 6.63000107, -7.46636343)
+                                        wait(1)
+                                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(68.9409561, 6.62999964, -11.2087212)
+                                        wait(1)
+                                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(64.0699768, 6.63000107, -11.5208979)
+                                        wait(0.5)
+                                        wait(1)
+                                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(59.1558762, 6.63000107, -7.64516211)
+                                    end
+                                end
+                            end
+                        end
+                    end
+        else
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(64.7216568, 6.63000107, -11.3157063)
+            wait(1)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(58.4695549, 6.63000107, -9.41764355)
+            wait(1)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(68.068222, 6.63000107, -7.46636343)
+            wait(1)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(68.9409561, 6.62999964, -11.2087212)
+            wait(1)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(64.0699768, 6.63000107, -11.5208979)
+            wait(0.5)
+            wait(1)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(59.1558762, 6.63000107, -7.64516211)
+        end
+    end
+end
+
+

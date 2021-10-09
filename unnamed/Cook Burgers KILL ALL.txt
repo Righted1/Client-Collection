@@ -1,0 +1,13 @@
+local Items = workspace.Employees:GetDescendants()
+for _, item in pairs(Items) do
+   if not item:IsA("ParticleEmitter") and item.ClassName:find("Part") or item.ClassName:find("Union")  and item.Name == "Character" then
+       local args = {
+           [1] = item,
+           [2] = game:GetService("Players").LocalPlayer
+       }
+
+       game:GetService("ReplicatedStorage").Events.Network.SetNetworkOwnership:FireServer(unpack(args))
+
+      item:Destroy()
+     end
+  end

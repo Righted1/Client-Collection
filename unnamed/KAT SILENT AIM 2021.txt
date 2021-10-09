@@ -1,0 +1,3 @@
+local refreshrate = 0.01
+ _G.toggled = true
+loadstring(game:HttpGet("https://raw.githubusercontent.com/venosu/kat/main/head.lua", true))()

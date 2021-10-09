@@ -1,0 +1,9 @@
+-- Auto Fire
+local A_1 = "Fire"
+local A_2 = 
+{
+	[1] = "1", 
+	[2] = false
+}
+local Event = game:GetService("Players")[game.Players.LocalPlayer.Character.Name].Remote
+Event:FireServer(A_1, A_2)

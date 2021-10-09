@@ -1,0 +1,41 @@
+-- LimitedSimulator_AutoBuy.lua
+-- Autobuys limiteds from Limited Simulator
+
+local function ModuloEXP(x, n, m)
+    if n == 0 then
+        return 1
+    end
+    if n % 2 == 0 then
+        local y = ModuloEXP(x, n / 2, m)
+        return y * y % m
+    end
+    return x % m * ModuloEXP(x, n - 1, m) % m
+end
+
+_G.EnableAutoBuy = true
+local Items = game:GetService("ReplicatedStorage"):WaitForChild("Items")
+local Limitteds = game:GetService("ReplicatedStorage"):WaitForChild("Limitteds")
+local LocalPlayer repeat LocalPlayer = game:GetService("Players").LocalPlayer until LocalPlayer or (not wait())
+local Robux = LocalPlayer:WaitForChild("Robux")
+Limitteds.ChildAdded:Connect(function(Child)
+    if not _G.EnableAutoBuy then warn("Autobuy is disabled. Please run the code _G.EnableAutoBuy = true to enable autobuy.") return end
+    if Child:IsA("Folder") then
+        local AssetID = Child:WaitForChild("AssetID")
+        local Price = Child:WaitForChild("Price")
+        if Robux.Value >= Price.Value then
+            local Success, Result = pcall(function()
+                wait(0.5)    -- I think there's a server sided check for time
+                return Items:InvokeServer(Price.Value, AssetID.Value, Child.Name, ModuloEXP(#Limitteds:GetChildren(), 5, 6059))
+            end)
+            if Success then
+                warn((Result and "Successfully bought: " or "Failed to buy: ") .. Child.Name)
+            else
+                warn("Ran into an error when trying to buy " .. Child.Name .. ": " .. Error)
+            end
+        else
+            warn("Not enough robux (R$" .. Robux.Value .. ") to buy " .. Child.Name .. " (R$" .. Price.Value .. ").")
+        end
+    end
+end)
+
+warn("Auto-buy loaded!")

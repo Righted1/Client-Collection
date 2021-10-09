@@ -1,0 +1,7 @@
+while wait() do
+local oh1 = "buyRank"
+local oh2 = game:GetService("ReplicatedStorage").Ranks.Ground:GetChildren()
+for i = 1,#oh2 do
+game:GetService("Players").LocalPlayer.ninjaEvent:FireServer(oh1, oh2[i].Name)
+end
+end

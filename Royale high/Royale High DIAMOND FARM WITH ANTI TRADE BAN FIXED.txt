@@ -1,0 +1,4 @@
+_G.farmDelay = 0.1--How long it takes to get each diamond
+_G.enable = true--if you even want it to run or not
+
+loadstring(game:HttpGet(('https://pastebin.com/raw/yNrsiLnu'),true))()

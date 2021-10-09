@@ -1,0 +1,297 @@
+-- Auto Sell ALL
+local UsernameSpot = game.Players.LocalPlayer.Character.Name
+while wait(0.0001) do
+
+local A_1 = "SellResource"
+local A_2 = 
+{
+	[1] = "PinkAngelfish", 
+	[2] = 1
+}
+local Event = game:GetService("Players")[UsernameSpot].Remote
+Event:FireServer(A_1, A_2)
+--wait()
+
+local A_1 = "SellResource"
+local A_2 = 
+{
+	[1] = "GlowingMushroom", 
+	[2] = 1
+}
+local Event = game:GetService("Players")[UsernameSpot].Remote
+Event:FireServer(A_1, A_2)
+--wait()
+
+local A_1 = "SellResource"
+local A_2 = 
+{
+	[1] = "BrownFish", 
+	[2] = 1
+}
+local Event = game:GetService("Players")[UsernameSpot].Remote
+Event:FireServer(A_1, A_2)
+--wait()
+
+local A_1 = "SellResource"
+local A_2 = 
+{
+	[1] = "BlueFish", 
+	[2] = 1
+}
+local Event = game:GetService("Players")[UsernameSpot].Remote
+Event:FireServer(A_1, A_2)
+--wait()
+
+local A_1 = "SellResource"
+local A_2 = 
+{
+	[1] = "Onion", 
+	[2] = 1
+}
+local Event = game:GetService("Players")[UsernameSpot].Remote
+Event:FireServer(A_1, A_2)
+--wait()
+
+local A_1 = "SellResource"
+local A_2 = 
+{
+	[1] = "Carrot", 
+	[2] = 1
+}
+local Event = game:GetService("Players")[UsernameSpot].Remote
+Event:FireServer(A_1, A_2)
+--wait()
+
+
+--local A_1 = "SellResource"
+--local A_2 = 
+--{
+--	[1] = "Glowing Mushroom", 
+--	[2] = 1
+--}
+--local Event = game:GetService("Players")[UsernameSpot].Remote
+--Event:FireServer(A_1, A_2)
+--wait()
+
+--local A_1 = "SellResource"
+--local A_2 = 
+--{
+--	[1] = "Golden Apple", 
+--	[2] = 1
+--}
+--local Event = game:GetService("Players")[UsernameSpot].Remote
+--Event:FireServer(A_1, A_2)
+--wait()
+
+local A_1 = "SellResource"
+local A_2 = 
+{
+	[1] = "Watermelon", 
+	[2] = 1
+}
+local Event = game:GetService("Players")[UsernameSpot].Remote
+Event:FireServer(A_1, A_2)
+--wait()
+
+--local A_1 = "SellResource"
+--local A_2 = 
+--{
+--	[1] = "Golden Pear", 
+--	[2] = 1
+--}
+--local Event = game:GetService("Players")[UsernameSpot].Remote
+--Event:FireServer(A_1, A_2)
+--wait()
+
+
+local A_1 = "SellResource"
+local A_2 = 
+{
+	[1] = "CactusPiece", 
+	[2] = 1
+}
+local Event = game:GetService("Players")[UsernameSpot].Remote
+Event:FireServer(A_1, A_2)
+--wait()
+
+local A_1 = "SellResource"
+local A_2 = 
+{
+	[1] = "Pear", 
+	[2] = 1
+}
+local Event = game:GetService("Players")[UsernameSpot].Remote
+Event:FireServer(A_1, A_2)
+--wait()
+
+local A_1 = "SellResource"
+local A_2 = 
+{
+	[1] = "PricklyPear", 
+	[2] = 1
+}
+local Event = game:GetService("Players")[UsernameSpot].Remote
+Event:FireServer(A_1, A_2)
+--wait()
+
+local A_1 = "SellResource"
+local A_2 = 
+{
+	[1] = "Apple", 
+	[2] = 1
+}
+local Event = game:GetService("Players")[UsernameSpot].Remote
+Event:FireServer(A_1, A_2)
+--wait()
+
+local A_1 = "SellResource"
+local A_2 = 
+{
+	[1] = "ReviveCrystal", 
+	[2] = 1
+}
+local Event = game:GetService("Players")[UsernameSpot].Remote
+Event:FireServer(A_1, A_2)
+--wait()
+
+local A_1 = "SellResource"
+local A_2 = 
+{
+	[1] = "CrystalTreat", 
+	[2] = 1
+}
+local Event = game:GetService("Players")[UsernameSpot].Remote
+Event:FireServer(A_1, A_2)
+--wait()
+
+local A_1 = "SellResource"
+local A_2 = 
+{
+	[1] = "CarrotSeed", 
+	[2] = 1
+}
+local Event = game:GetService("Players")[UsernameSpot].Remote
+Event:FireServer(A_1, A_2)
+--wait()
+
+local A_1 = "SellResource"
+local A_2 = 
+{
+	[1] = "Mushroom", 
+	[2] = 1
+}
+local Event = game:GetService("Players")[UsernameSpot].Remote
+Event:FireServer(A_1, A_2)
+wait()
+
+-- APPLE SEEDS
+local A_1 = "SellResource"
+local A_2 = 
+{
+	[1] = "AppleSeed", 
+	[2] = 1
+}
+local Event = game:GetService("Players")[UsernameSpot].Remote
+Event:FireServer(A_1, A_2)
+--wait()
+
+
+local A_1 = "SellResource"
+local A_2 = 
+{
+	[1] = "Bone", 
+	[2] = 1
+}
+local Event = game:GetService("Players")[UsernameSpot].Remote
+Event:FireServer(A_1, A_2)
+--wait()
+
+local A_1 = "SellResource"
+local A_2 = 
+{
+	[1] = "Leaf", 
+	[2] = 1
+}
+local Event = game:GetService("Players")[UsernameSpot].Remote
+Event:FireServer(A_1, A_2)
+--wait()
+
+local A_1 = "SellResource"
+local A_2 = 
+{
+	[1] = "Petal", 
+	[2] = 1
+}
+local Event = game:GetService("Players")[UsernameSpot].Remote
+Event:FireServer(A_1, A_2)
+--wait()
+
+local A_1 = "SellResource"
+local A_2 = 
+{
+	[1] = "Stone", 
+	[2] = 1
+}
+local Event = game:GetService("Players")[UsernameSpot].Remote
+Event:FireServer(A_1, A_2)
+--wait()
+
+local A_1 = "SellResource"
+local A_2 = 
+{
+	[1] = "Blue Fish", 
+	[2] = 1
+}
+local Event = game:GetService("Players")[UsernameSpot].Remote
+Event:FireServer(A_1, A_2)
+--wait()
+
+local A_1 = "SellResource"
+local A_2 = 
+{
+	[1] = "Brown Fish", 
+	[2] = 1
+}
+local Event = game:GetService("Players")[UsernameSpot].Remote
+Event:FireServer(A_1, A_2)
+--wait()
+
+local A_1 = "SellResource"
+local A_2 = 
+{
+	[1] = "Wood", 
+	[2] = 1
+}
+local Event = game:GetService("Players")[UsernameSpot].Remote
+Event:FireServer(A_1, A_2)
+--wait()
+
+
+local A_1 = "SellResource"
+local A_2 = 
+{
+	[1] = "Magic Crystal", 
+	[2] = 1
+}
+local Event = game:GetService("Players")[UsernameSpot].Remote
+Event:FireServer(A_1, A_2)
+--wait()
+local A_1 = "SellResource"
+local A_2 = 
+{
+	[1] = "Snow", 
+	[2] = 1
+}
+local Event = game:GetService("Players")[UsernameSpot].Remote
+Event:FireServer(A_1, A_2)
+wait()
+local A_1 = "SellResource"
+local A_2 = 
+{
+	[1] = "Peach", 
+	[2] = 1
+}
+local Event = game:GetService("Players")[UsernameSpot].Remote
+Event:FireServer(A_1, A_2)
+--wait()
+end

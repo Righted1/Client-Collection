@@ -1,0 +1,12 @@
+-- Auto Feed
+while wait(0.5) do
+local UsernameSpot = game.Players.LocalPlayer.Character.Name
+local A_1 = "Feed"
+local A_2 = 
+{
+	[1] = "1", 
+	[2] = "Apple"
+}
+local Event = game:GetService("Players")[UsernameSpot].Function
+Event:InvokeServer(A_1, A_2)
+end

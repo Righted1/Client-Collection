@@ -1,0 +1,16 @@
+while wait(2) do
+for _, v in pairs(Workspace.CollectionZones.Resources:GetChildren()) do
+if v.Name == "MinibushVolcano" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+wait(0.4)
+end
+if v.Name == "BushVolcano" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+wait(0.4)
+end
+if v.Name == "Crystal" then
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame
+wait(0.4)
+end
+end
+end

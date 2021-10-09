@@ -1,0 +1,181 @@
+getgenv().killallRange = 9e9-- the range where killaura will trigger 
+getgenv().cooldown = .4 -- the wait between attacks
+-- getting all the classes 
+local player = game:GetService("Players").LocalPlayer
+local ult
+local ult2
+local ab
+local ab2
+local name = game.ReplicatedStorage.Profiles[player.Name].Class.Value
+if name == 'DualWielder' then
+    name = 'DualWield'
+    ult = "DualWieldUltimateSword"
+    ult2 = "DualWieldUltimateSlam"
+    ab = "CrossSlash"
+    ab2 = 'DashStrike'
+elseif name == 'Defender' then
+    ab = 'Spin'
+    ab2 = 'Groundbreaker'
+elseif name == 'Mage' then
+    ab = 'ArcaneWave'
+    ab2 = 'ArcaneBlastAOE'
+    ab3 = 'ArcaneBlast'
+elseif name == 'Swordmaster' then
+    ab = 'CrescentStrike'
+    ab2 = 'Leap'
+elseif name == 'Guardian' then
+    ult = 'SwordPrison'
+    ab = 'RockSpikes'
+    ab12 = 'SlashFury'
+elseif name == 'IcefireMage' then
+    ult2 = 'IcefireMageUltimateFrost'
+    ab = 'IceSpikes'
+    ab12 = 'LightingStrike'
+    ab2 = 'IcefireMageFireballBlast'
+    ab22 = 'IcefireMageFireball'
+elseif name == 'Paladin' then
+    ab = 'LightThrust'
+    ab12 = 'LightPaladin'
+elseif name == 'Demon' then
+    name = 'DemonDPS'
+    ab = 'ScythThrow'
+    ab12 = 'DemonSoulAOE'
+    ab13 = 'DemonSoulDPS'
+    ab2 = 'DemonLifeStealAOE'
+    rem = game.ReplicatedStorage.Shared.Combat.Skillsets.Demon.Ultimate
+elseif name == 'Beserker' then
+    ab2 = 'AggroSlam'
+    ab1 = 'GigaSpin'
+    ab12 = 'Fissure'
+    rem = game:GetService("ReplicatedStorage").Shared.Combat.Skillsets.Berserker.BerserkHit
+elseif name == 'Dragoon' then
+    ab = 'DragoonCross'
+    ab12 = 'MultiStrike'
+    ab2 = 'DragoonFall'
+    ult = 'DragoonUltimate'
+    rem2 = game:GetService("ReplicatedStorage").Shared.Combat.Skillsets.Dragoon.Ultimate
+end
+
+-- anti kick 
+local mt = getrawmetatable(game)
+local nm = mt.__namecall
+setreadonly(mt,false)
+mt.__namecall = newcclosure(function(self,...)
+    local method = getnamecallmethod()
+    if method == 'Kick' or method == 'kick' then 
+        return wait(9e9)    
+    end
+    return nm(self,...)
+end)
+setreadonly(mt,true)
+
+-- attack function using keys
+local e = require(game:GetService("ReplicatedStorage").Shared.Combat)
+local currentkeys = getupvalues(require(game:GetService('ReplicatedStorage').Shared.Combat)['AttackTargets'])[1]
+function attack(mobs,vectors,attack)
+    local leave = false 
+    for i , v in pairs(mobs) do 
+        if not v.Parent then 
+            leave = true     
+        end
+    end
+    if leave then return end 
+    if #currentkeys == 5 then
+        currentkeys = game:GetService("ReplicatedStorage").Remotes.GetKeys:InvokeServer(currentkeys[4])
+        repeat wait() until #currentkeys > 4
+    end 
+    table.remove(currentkeys,#currentkeys)
+    game:GetService('ReplicatedStorage').Shared.Combat.AttackTarget:FireServer(mobs,vectors,attack,currentkeys[#currentkeys])
+    wait(getgenv().cooldown)
+end
+-- count loop ( kinda useless but I cba to rewrite my kill function )
+local count = 1
+coroutine.wrap(function()
+    while wait(1.5) do
+        count = 1 
+    end
+end)()
+-- Main kill function that damages the mobs
+function kill()
+    if player.Character and player.Character:FindFirstChild("Head") then 
+        local targets = {}
+        local vec = {}
+        if workspace:FindFirstChild('MissionObjects') then
+            -- getting mission objects so we can damage those to 
+            for i , v in pairs(workspace:GetDescendants()) do
+                if v.Name == 'HealthProperties' and v.Parent.Parent.Name ~= 'Characters' then
+                    table.insert(targets,v.Parent)
+                    table.insert(vec,player.Character.Head.Position+Vector3.new(math.random()+math.random(3,5),-(math.random()+5),math.random()))
+                end
+            end
+        else 
+            -- finding all the mobs 
+            for i , v in pairs(workspace:GetChildren()) do
+                if v:FindFirstChild("Collider") or v:FindFirstChild("BigCollider") then 
+                    local col = v:FindFirstChild("Collider") or v:FindFirstChild("BigCollider") 
+                    if col and (player.Character.HumanoidRootPart.Position-col.Position).Magnitude <= getgenv().killallRange then
+                        table.insert(targets,v)
+                        table.insert(vec,player.Character.Head.Position+Vector3.new(math.random()+math.random(3,5),-(math.random()+5),math.random()))
+                    end
+                end
+            end
+            for i , v in pairs(workspace.Mobs:GetChildren()) do
+                if v:FindFirstChild("Collider") or v:FindFirstChild("BigCollider") or v:FindFirstChild("HealthProperties") then 
+                    local col = v:FindFirstChild("Collider") or v:FindFirstChild("BigCollider") 
+                    if col and (player.Character.HumanoidRootPart.Position-col.Position).Magnitude <= getgenv().killallRange then
+                        table.insert(targets,v)
+                        table.insert(vec,player.Character.Head.Position+Vector3.new(math.random()+math.random(3,5),-(math.random()+5),math.random()))
+                    end
+                end
+            end
+        end
+        
+        -- Checking if there's any mobs in range and if there are then it'll attack them   
+        if vec[1] then
+            for i = 0 , 3 ,1 do
+                attack(targets,vec,name..tostring(count+i))
+            end
+            if ab13 then 
+                for i = 0 , 3 ,1 do
+                    attack(targets,vec,ab13..tostring(count+i))
+                end
+            end
+            if ult then
+                attack(targets,vec,ult..tostring(count))
+            end
+            if ullt2 then
+                attack(targets,vec,ult2)
+            end
+            if ab then
+                attack(targets,vec,ab..tostring(count))
+            end
+            if ab12 then
+                attack(targets,vec,ab12..tostring(count))
+            end
+            if ab22 then
+                attack(targets,vec,ab22)
+            end
+            if ab2 then
+                attack(targets,vec,ab2)
+            end
+            if ab3 then
+                attack(targets,vec,ab3)
+            end
+            if rem then 
+                rem:FireServer(targets)
+            end
+            -- some classe's have specific remotes for things like ultimate's, we fire those here
+            if rem2 then
+                rem2:FireServer()
+            end
+            count = count + 1
+
+        end
+    end
+    -- a caution wait
+    wait(3)
+end
+-- main kill loop 
+while wait() do 
+    kill()    
+end

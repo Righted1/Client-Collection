@@ -1,0 +1,349 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+
+local LocalPlayer = Players.LocalPlayer
+local TargetZone, DistanceAfterDeath = 16, 16
+local PriorityPlayer, PriorityPlayerBox, SwordBox = nil, Instance.new("SelectionBox", workspace), Instance.new("SelectionBox", workspace)
+local Connections, Whitelist, Blacklist = {}, {}, {}
+
+PriorityPlayerBox.LineThickness = 0.05
+PriorityPlayerBox.Transparency = 0.25
+PriorityPlayerBox.Color3 = Color3.new(0, 1, 0)
+PriorityPlayerBox.SurfaceTransparency = 0.75
+PriorityPlayerBox.SurfaceColor3 = Color3.new(0, 1, 0)
+
+SwordBox.LineThickness = 0.05
+SwordBox.Transparency = 0.25
+SwordBox.Color3 = Color3.new(1, 0.5, 0)
+SwordBox.SurfaceTransparency = 0.75
+SwordBox.SurfaceColor3 = Color3.new(1, 0.5, 0)
+
+local Metatable = getrawmetatable(game)
+local OldNamecall = Metatable.__namecall
+
+do
+    setreadonly(Metatable, false)
+       
+    Metatable.__namecall = newcclosure(function(self, ...)
+        local Method = getnamecallmethod()
+        local Arguments = {...}
+       
+        if Method == "FireServer" and self.Name == "1Event" then
+            print("lol")
+            return wait(1e19)
+        end
+       
+        return OldNamecall(self, unpack(Arguments))
+    end)
+       
+    setreadonly(Metatable, true)
+end
+
+shared.BotEnabled = false
+shared.HitboxSize = Vector3.new(6, 6, 6)
+
+function WeldPart(Part1, Part2)
+    local Weld = Instance.new("WeldConstraint")
+    Weld.Parent = Part1
+    Weld.Part0 = Part1
+    Weld.Part1 = Part2
+end
+
+function LoadPlayer(Player)
+    if Player ~= game.Players.LocalPlayer then
+        local function HeadBigger(Character)
+            if Character and Player.Name ~= game.Players.LocalPlayer.Name then
+                if Character:FindFirstChild("Head") then
+                    local NewHead = Character.Head:Clone()
+                    NewHead.Parent = Character.Head
+                    NewHead:FindFirstChildOfClass("BillboardGui"):Destroy()
+                   
+                    WeldPart(NewHead, Character["Head"])
+                   
+                    Character.Head.CanCollide = false
+                    Character.Head.Size = shared.HitboxSize
+                    Character.Head.Massless = true
+                    Character.Head.Transparency = 0.99
+                    Character.Head.Color = Color3.fromRGB(139, 171, 87)
+
+                    if Character.Head:FindFirstChild("Mesh") then
+                        Character.Head.Mesh:Destroy()
+                    end
+                   
+                    Character.Humanoid.Died:Connect(function()
+                        wait(game.Players.RespawnTime)
+                        NewHead:Destroy()
+                    end)
+                   
+                    Character.Head:GetPropertyChangedSignal("Transparency"):Connect(function()
+                        if Character.Head.Transparency < 0.99 then
+                            Character.Head.Transparency = 0.99
+                        end
+                    end)
+                end
+            end
+        end
+
+        Player.CharacterAdded:Connect(function(Character)
+            repeat wait() until Character:FindFirstChild("Head") wait(0.5)
+            HeadBigger(Character)
+        end)
+
+        if Player.Character then
+            repeat wait() until Player.Character:FindFirstChild("Head") wait(0.5)
+            HeadBigger(Player.Character)
+        end
+    end
+end
+
+for _, Player in next, game:GetService("Players"):GetChildren() do
+    spawn(function() LoadPlayer(Player) end)
+end
+
+function CalculateDistance(Part1, Part2)
+    return (Part1.Position - Part2.Position).Magnitude
+end
+
+local ZonePart = nil
+
+for _, Part in next, workspace.Structure:GetChildren() do
+    if Part.Name == "Deco" and Part.BrickColor == BrickColor.new("Cork") then
+        ZonePart = Part
+    end
+end
+
+local SuperZone = ZonePart:Clone()
+SuperZone.Parent = ZonePart.Parent
+SuperZone.CanCollide = false
+SuperZone.Size = Vector3.new(ZonePart.Size.X, 30, ZonePart.Size.Z)
+SuperZone.Position = Vector3.new(ZonePart.Position.X, SuperZone.Position.Y + 15, ZonePart.Position.Z)
+SuperZone.Anchored = true
+SuperZone.Transparency = 0.9
+
+local SafeZone = {}
+
+local MaxBound = {X = SuperZone.Position.X + (SuperZone.Size.X / 2), Z = SuperZone.Position.Z + (SuperZone.Size.Z / 2)}
+local MinBound = {X = SuperZone.Position.X - (SuperZone.Size.X / 2), Z = SuperZone.Position.Z - (SuperZone.Size.Z / 2)}
+
+function GetSafeZone()
+    local SafeZone = {}
+
+    for _, Character in next, workspace:GetChildren() do
+        if Character:FindFirstChild("HumanoidRootPart") then
+            local Position = Character.HumanoidRootPart.Position
+            if Position.X < MaxBound.X and Position.Z < MaxBound.Z and Position.X > MinBound.X and Position.Z > MinBound.Z then
+                SafeZone[Character.Name] = true
+            end
+        end
+    end
+   
+    return SafeZone
+end
+
+spawn(function()
+    while wait(0.1) do SafeZone = GetSafeZone() end
+end)
+
+function GetTarget()
+    local Players = Players:GetChildren()
+    local ClosestPlayer, DistanceToPlayer = nil, math.huge
+
+    for _, Player in next, Players do
+        if Player ~= LocalPlayer and not SafeZone[Player.Name] and not Whitelist[Player.Name] and Player.Character and Player.Character:FindFirstChildOfClass("Humanoid") and Player.Character.Humanoid.Health > 0 then
+            if Player.Character:FindFirstChildOfClass("Tool") or Blacklist[Player.Name] then
+                if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and Player.Character and Player.Character:FindFirstChild("HumanoidRootPart") then
+                    local Distance = CalculateDistance(LocalPlayer.Character.HumanoidRootPart, Player.Character.HumanoidRootPart)
+    
+                    if Distance <= TargetZone then
+                        if Distance < DistanceToPlayer then
+                            ClosestPlayer = Player
+                            DistanceToPlayer = Distance
+                        end
+                    end
+                end
+            end
+        end
+    end
+    
+    if SafeZone[PriorityPlayer] then PriorityPlayer = nil end
+    
+    if ClosestPlayer then return ClosestPlayer, DistanceToPlayer end
+    if not (PriorityPlayer and PriorityPlayer.Character and PriorityPlayer.Character) or not LocalPlayer.Character then return ClosestPlayer, DistanceToPlayer end
+       
+    return PriorityPlayer, CalculateDistance(LocalPlayer.Character.HumanoidRootPart, PriorityPlayer.Character.HumanoidRootPart)
+end
+
+function SetRandomPriorityPlayer()
+    repeat
+        local Player = Players:GetChildren()[math.random(1, #Players:GetChildren())]
+
+        if Player.Character and Player.Character.Humanoid.Health > 0 and not SafeZone[Player.Name] and not Whitelist[Player.Name] then
+            SetPriorityPlayer(Player)
+        end
+    until PriorityPlayer
+end
+
+function SetPriorityPlayer(Player)
+    PriorityPlayer = Player
+
+    if Player == nil then
+        for _, Connection in next, Connections do Connection:Disconnect() end
+        return
+    end
+
+    local Connection Connection = Player.Character.Humanoid.Died:Connect(function()
+        if PriorityPlayer == Player then PriorityPlayer = nil end
+
+        Connection:Disconnect()
+    end)
+
+    if Connections[Player.Name] then Connections[Player.Name]:Disconnect() end
+    Connections[Player.Name] = Connection
+end
+
+function WhitelistPlayer(String)
+    for _, Player in next, Players:GetChildren() do
+        if string.sub(string.lower(Player.Name), 1, string.len(String)) == string.lower(String) then
+            if Player.Character and Player.Character.Humanoid.Health > 0 and not SafeZone[Player.Name] and not Whitelist[Player.Name] then
+                Whitelist[Player.Name] = true
+                break
+            end
+        end
+    end
+end
+
+function UnwhitelistPlayer(String)
+    for Name in next, Whitelist do
+        if string.sub(string.lower(Name), 1, string.len(String)) == string.lower(String) then
+            Whitelist[Name] = nil
+            break
+        end
+    end
+end
+
+function BlacklistPlayer(String)
+    for _, Player in next, Players:GetChildren() do
+        if string.sub(string.lower(Player.Name), 1, string.len(String)) == string.lower(String) then
+            if Player.Character and Player.Character.Humanoid.Health > 0 and not SafeZone[Player.Name] and not Blacklist[Player.Name] then
+                Blacklist[Player.Name] = true
+                break
+            end
+        end
+    end
+end
+
+function UnblacklistPlayer(String)
+    for Name in next, Blacklist do
+        if string.sub(string.lower(Name), 1, string.len(String)) == string.lower(String) then
+            Blacklist[Name] = nil
+            break
+        end
+    end
+end
+
+function FindPriorityPlayer(String)
+    for _, Player in next, Players:GetChildren() do
+        if string.sub(string.lower(Player.Name), 1, string.len(String)) == string.lower(String) then
+            if Player.Character and Player.Character.Humanoid.Health > 0 and not SafeZone[Player.Name] and not Whitelist[Player.Name] then
+                SetPriorityPlayer(Player)
+                break
+            end
+        end
+    end
+end
+
+function OnDeath(Character)
+    Character:WaitForChild("Humanoid").Died:Connect(function()
+        TargetZone = DistanceAfterDeath
+    end)
+end
+
+RunService:BindToRenderStep("FollowTarget", Enum.RenderPriority.Character.Value + 1, function()
+    if shared.BotEnabled then
+        local Target, Distance = GetTarget()
+        local Sword = nil
+
+        if not LocalPlayer.Character:FindFirstChildOfClass("Tool") then
+            LocalPlayer.Character.Humanoid:EquipTool(LocalPlayer.Backpack:FindFirstChildOfClass("Tool"))
+        end
+
+        Sword = LocalPlayer.Character:FindFirstChildOfClass("Tool")
+        Sword.Handle.Size = Vector3.new(1,1,16)
+        SwordBox.Adornee = Sword.Handle
+
+        if Target and Target.Character then
+            PriorityPlayerBox.Adornee = Target and Target.Character
+            LocalPlayer.Character.Humanoid:MoveTo(Target.Character.HumanoidRootPart.Position)
+           
+            if Distance > TargetZone then
+                LocalPlayer.Character.Humanoid.WalkSpeed = 24
+            else
+                LocalPlayer.Character.Humanoid.WalkSpeed = 20
+            end
+           
+            if Distance <= 11 then
+                mouse1click()
+            end
+
+            if Distance <= 7 then
+                LocalPlayer.Character.Humanoid.AutoRotate = false
+                local Position = (Target.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 5)).Position
+                local TargetPosition = Vector3.new(Target.Character:GetPrimaryPartCFrame().Position.X, Position.Y, Target.Character:GetPrimaryPartCFrame().Position.Z)
+                LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(Position, TargetPosition) * CFrame.Angles(0, math.rad(45/2), 0))
+            else
+                LocalPlayer.Character.Humanoid.Jump = true
+                LocalPlayer.Character.Humanoid.AutoRotate = true
+            end
+        else
+            if not NoTargetPosition then
+                NoTargetPosition = LocalPlayer.Character:GetPrimaryPartCFrame().Position
+            end
+
+            PriorityPlayerBox.Adornee = nil
+            LocalPlayer.Character.Humanoid:MoveTo(NoTargetPosition)
+        end
+    end
+end)
+
+UserInputService.InputBegan:Connect(function(Input, GameProcessed)
+    if Input.KeyCode == Enum.KeyCode.BackSlash and not GameProcessed then
+        shared.BotEnabled = not shared.BotEnabled
+    elseif Input.KeyCode == Enum.KeyCode.Semicolon and not GameProcessed then
+        PriorityPlayer = nil
+
+        SetRandomPriorityPlayer()
+    end
+end)
+
+LocalPlayer.Chatted:Connect(function(Message)
+    if string.sub(string.lower(Message), 1, 2) == "t " then
+        FindPriorityPlayer(string.sub(string.lower(Message), 3))
+    elseif string.sub(string.lower(Message), 1, 2) == "ut" then
+        SetPriorityPlayer(nil)
+    elseif string.sub(string.lower(Message), 1, 2) == "w " then
+        WhitelistPlayer(string.sub(string.lower(Message), 3))
+    elseif string.sub(string.lower(Message), 1, 3) == "uw " then
+        UnwhitelistPlayer(string.sub(string.lower(Message), 4))
+    elseif string.sub(string.lower(Message), 1, 2) == "b " then
+        BlacklistPlayer(string.sub(string.lower(Message), 3))
+    elseif string.sub(string.lower(Message), 1, 3) == "ub " then
+        UnblacklistPlayer(string.sub(string.lower(Message), 4))
+    elseif string.sub(string.lower(Message), 1, 2) == "sp" then
+        NoTargetPosition = LocalPlayer.Character:GetPrimaryPartCFrame().Position
+    elseif string.sub(string.lower(Message), 1, 2) == "d " then
+        TargetZone = tonumber(string.sub(string.lower(Message), 3))
+    elseif string.sub(string.lower(Message), 1, 3) == "dd " then
+        DistanceAfterDeath = tonumber(string.sub(string.lower(Message), 4))
+    end
+end)
+
+if not LocalPlayer.Character:FindFirstChildOfClass("Tool") then
+    LocalPlayer.Character.Humanoid:EquipTool(LocalPlayer.Backpack:FindFirstChildOfClass("Tool"))
+end
+
+OnDeath(LocalPlayer.Character)
+
+SwordBox.Adornee = LocalPlayer.Character:FindFirstChildOfClass("Tool")
+game.Players.PlayerAdded:Connect(LoadPlayer)
+LocalPlayer.CharacterAdded:Connect(OnDeath)

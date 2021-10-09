@@ -1,0 +1,10 @@
+-- Auto Harvest ALL
+local UsernameSpot = game.Players.LocalPlayer.Character.Name
+while wait(0.1) do
+local A_1 = "ClaimCrop"
+-- local A_2 = 1
+local Event = game:GetService("Players")[UsernameSpot].Function
+for i=1,500 do
+Event:InvokeServer(A_1, i)
+end
+end

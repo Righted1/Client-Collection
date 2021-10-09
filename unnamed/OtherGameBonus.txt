@@ -1,0 +1,31 @@
+-- https://www.roblox.com/games/5064142252/Mutated-Apex-Simulator-Update-11
+
+-- Buy PREMIUM [SECRET] Egg every 10 seconds, you still need 25T money
+while wait(10) do
+local A_1 = game:GetService("Players").PUT_YOUR_USERNAME_HERE_OR_IT_WILL_NOT_WORK
+local A_2 = "PremiumDemon"
+local A_3 = false
+local Event = game:GetService("ReplicatedStorage").KeyBind
+Event:InvokeServer(A_1, A_2, A_3)
+
+end
+
+
+-- FREE AUTO CLICK (NO PREMIUM)
+while wait(0.00001) do
+local A_1 = "omghesusingautolol"
+local Event = game:GetService("ReplicatedStorage").Auto.Auto
+Event:FireServer(A_1)
+end
+
+
+
+-- FREE PREMIUM AUTO CLICK + PREMIUM COIN
+local A_1 = "omgheisselectinghiscoinmlgpro"
+local A_2 = "PremiumCoin"
+local Event = game:GetService("ReplicatedStorage").Auto.Select
+Event:FireServer(A_1, A_2)
+
+
+-- TP TO PREMIUM AREA
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Workspace["Premium Area"]["Part Spawn"].CFrame

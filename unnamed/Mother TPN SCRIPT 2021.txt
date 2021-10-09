@@ -1,0 +1,5 @@
+workspace.Mother.Changed:Connect(function()
+    if not workspace.Mother.Value then 
+        wait(1) game:GetService("TeleportService"):Teleport(5057286085)
+    end
+end) 

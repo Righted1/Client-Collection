@@ -1,0 +1,11 @@
+local UsernameSpot = game.Players.LocalPlayer.Character.Name
+while wait(0.0001) do
+local A_1 = "SellResource"
+local A_2 = 
+{
+	[1] = "Apple", 
+	[2] = 1
+}
+local Event = game:GetService("Players")[UsernameSpot].Remote
+Event:FireServer(A_1, A_2)
+end

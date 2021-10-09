@@ -1,0 +1,20 @@
+local itemType = "Furniture" -- "Furniture" or "Appliance"
+local itemId = ""; -- Insert item ID from https://pastebin.com/raw/EhZJdX5h
+local amount = 1; -- The amount of furniture you want
+
+workspace.__THINGS.__REMOTES.purchasegameitem:InvokeServer(
+       {
+           [1] = {
+               [1] = itemType,
+               [2] = itemId,
+               [3] = amount,
+               [4] = false
+           },
+           [2] = {
+               [1] = false,
+               [2] = false,
+               [3] = false,
+               [4] = false
+           }
+       }
+   )

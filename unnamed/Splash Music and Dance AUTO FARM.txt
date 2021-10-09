@@ -1,0 +1,55 @@
+--By LoganRMX
+local plr = game.Players.LocalPlayer
+
+plr.PlayerScripts.AFKDetectionPads:Destroy()
+plr.PlayerScripts["AFKDetection "]:Destroy()
+
+game.ReplicatedStorage:WaitForChild("DetectAFK").OnClientInvoke = function()
+return false
+end
+
+--Random anti afk script here, not sure if it stills works.
+local vu = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+  vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+  wait(1)
+  vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
+
+function findContentFrame()
+   local tings = plr.PlayerGui.SideDisplay.DJQueuePopup.SelectScroll:GetChildren()
+   for _,v in pairs(tings) do
+       if v:FindFirstChild("UsernameText") then
+           if v.UsernameText.Text == game.Players.LocalPlayer.Name then
+               return v
+           end
+       end
+   end
+end
+local middle = plr.PlayerGui.SideDisplay.DJQueuePopup.SelectScroll.Divider.LayoutOrder
+
+
+plr.Character.BillboardGui.BeatIndicatorFramechar.TapManager:Destroy()
+local money = game.ReplicatedStorage:WaitForChild("DanceModeCoinEvent")
+local lol = game.ReplicatedStorage:WaitForChild("DJEndCutSceneStartedEvent")
+local e = game.ReplicatedStorage:WaitForChild("SetDanceStreakVisuals")
+local anupvalue = 0
+
+money.OnClientEvent:Connect(function(p)
+   money:FireServer(4,p)
+end)
+
+e.OnClientEvent:Connect(function(p)
+   anupvalue = p
+end)
+
+
+lol.OnClientEvent:Connect(function()
+   game.ReplicatedStorage:WaitForChild("DanceModeHighestStreakEvent"):FireServer(9999, anupvalue)
+   points = 0
+   if middle < findContentFrame().LayoutOrder then
+       game:GetService("ReplicatedStorage").Add2DjQueueEvent:FireServer(math.random(100))
+   end
+   game:GetService("ReplicatedStorage").ReactionEvent:FireServer(math.random(4))
+   game:GetService("ReplicatedStorage").CrowdModeCoinEvent:FireServer()
+end)
