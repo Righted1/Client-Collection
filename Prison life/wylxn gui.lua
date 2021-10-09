@@ -1,0 +1,1 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Wylxn/WylxnGui-V2/main/WylxnGUI"))()
