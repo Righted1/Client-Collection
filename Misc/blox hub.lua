@@ -1,0 +1,1 @@
+loadstring(game:HttpGet(('https://raw.githubusercontent.com/TomGof/Not-Familly-Friendly-Gui/main/Not%20familly%20friendly%20gui'),true))()

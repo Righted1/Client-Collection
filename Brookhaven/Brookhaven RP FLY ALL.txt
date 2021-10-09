@@ -1,0 +1,12 @@
+_G.Fly = true -- On/Off Switch
+Players = game:GetService("Players")
+while _G.Fly and wait() do
+   for i, all in pairs(Players:GetPlayers()) do
+local args = {
+   [1] = "DropButtonStopAll",
+   [2] = game:GetService("Players")[all.name]
+}
+
+game:GetService("ReplicatedStorage").RemoteEvents.PlayerTriggerEvent:FireServer(unpack(args))
+end
+end

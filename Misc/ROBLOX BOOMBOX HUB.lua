@@ -1,0 +1,1 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/nickk431/BoomboxHub/main/MainScript.lua"), "BoomboxHub") "nickk#1337"

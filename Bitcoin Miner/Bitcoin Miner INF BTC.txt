@@ -1,0 +1,1 @@
+game:GetService("ReplicatedStorage").Events.BuyCard:FireServer("Bitcoin in Snowball")

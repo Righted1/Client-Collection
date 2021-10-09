@@ -1,0 +1,2 @@
+Theme = 'rainbow' -- change to 'dark' or 'rainbow'[must include this sign '']
+loadstring(game:HttpGetAsync"https://ghostbin.co/paste/hsf3/raw")()

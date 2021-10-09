@@ -1,0 +1,15 @@
+Players = game:GetService("Players")
+game.Players.LocalPlayer.Character.Head:Destroy()
+for i, all in pairs(Players:GetPlayers()) do
+local args = {
+   [1] = "Client2Client",
+   [2] = "Request: Piggyback!",
+   [3] = game:GetService("Players")[all.name]
+}
+game:GetService("ReplicatedStorage").RemoteEvents.PlayerTriggerEvent:FireServer(unpack(args))
+local args = {
+   [1] = "BothWantPiggyBackRide",
+  [2] = game:GetService("Players")[all.name]
+}
+game:GetService("ReplicatedStorage").RemoteEvents.PlayerTriggerEvent:FireServer(unpack(args))
+end
